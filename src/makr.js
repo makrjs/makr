@@ -1,0 +1,1 @@
+var makr = makr || {};
