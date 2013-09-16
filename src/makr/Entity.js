@@ -1,0 +1,80 @@
+/**
+ * @final
+ * @class Entity
+ * @constructor
+ */
+makr.Entity = function(world) {
+  /**
+   * @private
+   * @property {World} _world
+   */
+  this._world = world;
+
+  /**
+   * @private
+   * @property {Boolean} _alive
+   */
+  this._alive = true;
+
+  /**
+   * @private
+   * @property {Boolean} _waitingForRefresh
+   */
+  this._waitingForRefresh = false;
+
+  /**
+   * @private
+   * @property {Boolean} _waitingForRemoval
+   */
+  this._waitingForRemoval = false;
+
+  /**
+   * @private
+   * @property {BitSet} _componentMask
+   */
+  this._componentMask = new makr.BitSet(makr.config.MAX_COMPONENTS);
+
+  /**
+   * @private
+   * @property {BitSet} _systemMask
+   */
+  this._systemMask = new makr.BitSet(makr.config.MAX_SYSTEMS);
+};
+
+makr.Entity.prototype = {
+  /**
+   * @method get
+   * @param  {Uint} type
+   * @return {Object}
+   */
+  get: function(type) {
+    return this._world._getComponent(this, type);
+  },
+  /**
+   * @method add
+   * @param {Object} component
+   * @param {Uint} type
+   */
+  add: function(component, type) {
+    this._world._addComponent(this, component, type);
+  },
+  /**
+   * @method remove
+   * @param {Uint} type
+   */
+  remove: function(type) {
+    this._world._removeComponent(this, type);
+  },
+  /**
+   * @method clear
+   */
+  clear: function() {
+    this._world._removeComponents(this);
+  },
+  /**
+   * @method kill
+   */
+  kill: function() {
+    this._world.kill(this);
+  }
+};
