@@ -145,6 +145,9 @@ makr.World.prototype = {
    * @param {Entity} entity
    */
   _refreshEntity: function(entity) {
+    // Unset refresh flag
+    entity._waitingForRefresh = false;
+
     var systems = this._systems;
     var i = 0;
     var n = systems.length;
@@ -187,7 +190,7 @@ makr.World.prototype = {
       // Reset component mask
       entity._componentMask.reset();
 
-      // Refresh systems
+      // Refresh entity
       this._refreshEntity(entity);
     }
   },
@@ -229,7 +232,7 @@ makr.World.prototype = {
   _removeComponent: function(entity, type) {
     entity._componentMask.set(type, 0);
 
-    this.refresh(entity);
+    this._refreshEntity(entity);
   },
   /**
    * @private
