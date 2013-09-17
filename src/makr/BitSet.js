@@ -48,7 +48,12 @@ makr.BitSet.prototype = {
    * @method reset
    */
   reset: function() {
-    this._words = new Uint32Array(this._length);
+    var words = this._words;
+    var i = this._length;
+
+    while (i--) {
+      words[i] = 0;
+    }
   },
   /**
    * @method contains
