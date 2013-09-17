@@ -57,10 +57,11 @@ describe('Entity', function() {
       var component;
 
       entity.add(new Point(), 4);
+      entity.add(new Rectangle(), 4);
       component = entity.get(4);
 
       should.exist(component);
-      component.should.be.an.instanceOf(Point);
+      component.should.be.an.instanceOf(Rectangle);
     });
 
     it('should return undefined if there is no component of the specified type', function() {
