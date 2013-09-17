@@ -21,7 +21,7 @@ module.exports = function(grunt) {
       options: {
         '-W030': true,
       },
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'examples/**/*.js'],
     },
     watch: {
       files: ['<%= jshint.files %>'],
