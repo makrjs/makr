@@ -1,8 +1,19 @@
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
+  grunt.loadNpmTasks('grunt-mocha-test');
+
+  var files = [
+    'src/makr.js',
+    'src/makr/BitSet.js',
+    'src/makr/Entity.js',
+    'src/makr/World.js',
+    'src/makr/System.js',
+    'src/makr/IteratingSystem.js',
+  ];
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -16,6 +27,12 @@ module.exports = function(grunt) {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint'],
     },
+    concat: {
+      dist: {
+        src: files,
+        dest: 'dist/makr.js',
+      },
+    },
     yuidoc: {
       compile: {
         name: '<%= pkg.name %>',
@@ -28,8 +45,16 @@ module.exports = function(grunt) {
         },
       },
     },
+    mochaTest: {
+      dist: {
+        options: {
+          reporter: 'spec',
+        },
+        src: 'test/**/*.js',
+      },
+    },
   });
 
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'concat', 'mochaTest']);
 
 };

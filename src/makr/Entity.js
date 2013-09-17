@@ -3,7 +3,13 @@
  * @class Entity
  * @constructor
  */
-makr.Entity = function(world) {
+makr.Entity = function(world, id) {
+  /**
+   * @private
+   * @property {Uint} _id
+   */
+  this._id = id;
+
   /**
    * @private
    * @property {World} _world
@@ -76,5 +82,29 @@ makr.Entity.prototype = {
    */
   kill: function() {
     this._world.kill(this);
+  },
+  /**
+   * @method refresh
+   */
+  refresh: function() {
+    this._world.refresh(this);
   }
 };
+
+/**
+ * @property {Uint} id
+ */
+Object.defineProperty(makr.Entity.prototype, 'id', {
+  get: function() {
+    return this._id;
+  }
+});
+
+/**
+ * @property {Boolean} alive
+ */
+Object.defineProperty(makr.Entity.prototype, 'alive', {
+  get: function() {
+    return this._alive;
+  }
+});

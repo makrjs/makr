@@ -1,4 +1,7 @@
 /**
+ * The primary instance for the framework. It contains all the managers.
+ * You must use this to create, delete and retrieve entities.
+ *
  * @final
  * @class World
  * @constructor
@@ -39,10 +42,18 @@ makr.World = function() {
    * @property {Entity[]} _refreshed
    */
   this._refreshed = [];
+
+  /**
+   * @private
+   * @property {Object[][]} _componentBags
+   */
+  this._componentBags = [];
 };
 
 makr.World.prototype = {
   /**
+   * Registers the specified system.
+   *
    * @method registerSystem
    * @param {System} system
    */
@@ -57,6 +68,8 @@ makr.World.prototype = {
     system.onRegistered();
   },
   /**
+   * Creates a new entity.
+   *
    * @method create
    * @return {Entity}
    */
@@ -67,13 +80,15 @@ makr.World.prototype = {
       entity = this._dead.pop();
       entity._alive = true;
     } else {
-      entity = new Entity(this, this._nextEntityID++);
+      entity = new makr.Entity(this, this._nextEntityID++);
     }
 
     this._alive.push(entity);
     return entity;
   },
   /**
+   * Kills the specified entity.
+   *
    * @method kill
    * @param {Entity} entity
    */
@@ -84,6 +99,8 @@ makr.World.prototype = {
     }
   },
   /**
+   * Queues the entity to be refreshed.
+   *
    * @method refresh
    * @param {Entity} entity
    */
@@ -94,6 +111,8 @@ makr.World.prototype = {
     }
   },
   /**
+   * Updates all systems.
+   *
    * @method update
    * @param {Float} elapsed
    */
@@ -181,7 +200,7 @@ makr.World.prototype = {
    */
   _getComponent: function(entity, type) {
     if (entity._componentMask.get(type)) {
-      return this._componentBags[entity.id][type];
+      return this._componentBags[entity._id][type];
     }
 
     return null;
@@ -196,8 +215,8 @@ makr.World.prototype = {
   _addComponent: function(entity, component, type) {
     entity._componentMask.set(type, 1);
 
-    this._componentBags[entity.id] || (this._componentBags[entity.id] = []);
-    this._componentBags[entity.id][type] = component;
+    this._componentBags[entity._id] || (this._componentBags[entity._id] = []);
+    this._componentBags[entity._id][type] = component;
   },
   /**
    * @private

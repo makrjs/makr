@@ -7,3 +7,7 @@ var makr = makr || {
     MAX_SYSTEMS: 32
   }
 };
+
+if (typeof module !== 'undefined') {
+  module.exports = makr;
+}
