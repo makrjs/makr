@@ -18,9 +18,10 @@ makr.System = function() {
   this._entities = [];
 
   /**
-   * @property {World} world
+   * @private
+   * @property {World} _world
    */
-  this.world = null;
+  this._world = null;
 };
 
 makr.System.prototype = {
@@ -44,8 +45,10 @@ makr.System.prototype = {
   },
   /**
    * @method processEntities
+   * @param {Entity[]} entities
+   * @param {Float} elapsed
    */
-  processEntities: function() {},
+  processEntities: function(entities, elapsed) {},
   /**
    * @method onRegistered
    */
@@ -99,3 +102,12 @@ makr.System.prototype = {
     }
   }
 };
+
+/**
+ * @property {Boolean} world
+ */
+Object.defineProperty(makr.System.prototype, 'world', {
+  get: function() {
+    return this._world;
+  }
+});

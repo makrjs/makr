@@ -15,7 +15,7 @@ makr.IteratingSystem.prototype.processEntities = function(entities, elapsed) {
   var n = entities.length;
 
   for (i = 0; i < n; i++) {
-    this.process(entities[i]);
+    this.process(entities[i], elapsed);
   }
 };
 

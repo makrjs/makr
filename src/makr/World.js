@@ -136,7 +136,7 @@ makr.World.prototype = {
     var systems = this._systems;
     var n = systems.length;
     for (i = 0; i < n; i++) {
-      systems.update(elapsed);
+      systems[i].update(elapsed);
     }
   },
   /**
@@ -217,6 +217,8 @@ makr.World.prototype = {
 
     this._componentBags[entity._id] || (this._componentBags[entity._id] = []);
     this._componentBags[entity._id][type] = component;
+
+    this.refresh(entity);
   },
   /**
    * @private
@@ -226,6 +228,8 @@ makr.World.prototype = {
    */
   _removeComponent: function(entity, type) {
     entity._componentMask.set(type, 0);
+
+    this.refresh(entity);
   },
   /**
    * @private
