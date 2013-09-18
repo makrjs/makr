@@ -22,6 +22,11 @@ makr.System = function() {
    * @property {World} _world
    */
   this._world = null;
+
+  /**
+   * @property {Boolean} enabled
+   */
+  this.enabled = true;
 };
 
 makr.System.prototype = {
@@ -39,9 +44,11 @@ makr.System.prototype = {
    * @param {Float} elapsed
    */
   update: function(elapsed) {
-    this.onBegin();
-    this.processEntities(this._entities, elapsed);
-    this.onEnd();
+    if (this.enabled) {
+      this.onBegin();
+      this.processEntities(this._entities, elapsed);
+      this.onEnd();
+    }
   },
   /**
    * @method processEntities
