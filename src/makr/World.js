@@ -232,7 +232,7 @@ makr.World.prototype = {
   _removeComponent: function(entity, type) {
     entity._componentMask.set(type, 0);
 
-    this._refreshEntity(entity);
+    this.refresh(entity);
   },
   /**
    * @private
