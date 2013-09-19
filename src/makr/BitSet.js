@@ -8,13 +8,18 @@ makr.BitSet = function(size) {
    * @private
    * @property {Uint} _length
    */
-  this._length = Math.ceil(size / 32);
+  var length = this._length = Math.ceil(size / 32);
 
   /**
    * @private
-   * @property {Uint32Array} _words
+   * @property {Array} _words
    */
-  this._words = new Uint32Array(this._length);
+  var words = this._words = new Array(length);
+
+  // Create empty words
+  while (length--) {
+    words[length] = 0;
+  }
 };
 
 makr.BitSet.prototype = {
@@ -61,20 +66,71 @@ makr.BitSet.prototype = {
    * @return {Boolean}
    */
   contains: function(other) {
-    if (this._length != other._length) {
+    var words = this._words;
+    var i = this._length;
+
+    if (i != other._length) {
       return false;
     }
 
-    var words = this._words;
-    var i = 0;
-    var n = this._length;
-
-    for (; i < n; i++) {
+    while (i--) {
       if ((words[i] & other._words[i]) != other._words[i]) {
         return false;
       }
     }
 
     return true;
+  }
+};
+
+makr.FastBitSet = function() {
+  /**
+   * @private
+   * @property {Uint} _bits
+   */
+  this._bits = 0;
+
+  // Prevent comparison against BitSet
+  this._length = 0;
+};
+
+/**
+ * @class FastBitSet
+ * @constructor
+ */
+makr.FastBitSet.prototype = {
+  /**
+   * @method set
+   * @param {Uint} index
+   * @param {Boolean} value
+   */
+  set: function(index, value) {
+    if (value) {
+      this._bits |= 1 << index;
+    } else {
+      this._bits &= ~(1 << index);
+    }
+  },
+  /**
+   * @method get
+   * @param  {Uint} index
+   * @return {Boolean}
+   */
+  get: function(index) {
+    return !!(this._bits & (1 << index));
+  },
+  /**
+   * @method reset
+   */
+  reset: function() {
+    this._bits = 0;
+  },
+  /**
+   * @method contains
+   * @param  {FastBitSet} other
+   * @return {Boolean}
+   */
+  contains: function(other) {
+    return !other._length && (this._bits & other._bits) == other._bits;
   }
 };

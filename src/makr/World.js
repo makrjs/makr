@@ -117,6 +117,23 @@ makr.World.prototype = {
    * @param {Float} elapsed
    */
   update: function(elapsed) {
+    // Process entities
+    this.loopStart();
+
+    var systems = this._systems;
+    var i = 0;
+    var n = systems.length;
+
+    for (; i < n; i++) {
+      systems[i].update(elapsed);
+    }
+  },
+  /**
+   * Processes all queued entities.
+   *
+   * @method loopStart
+   */
+  loopStart: function() {
     var i, entities;
 
     // Process entities queued for removal
@@ -132,12 +149,6 @@ makr.World.prototype = {
     }
 
     entities.length = 0;
-
-    var systems = this._systems;
-    var n = systems.length;
-    for (i = 0; i < n; i++) {
-      systems[i].update(elapsed);
-    }
   },
   /**
    * @private

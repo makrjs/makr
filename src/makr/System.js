@@ -5,11 +5,14 @@
  * @constructor
  */
 makr.System = function() {
+  // Choose the BitSet class according to the engine configuration
+  var BitSetClass = (makr.config.MAX_COMPONENTS <= 32 && makr.config.MAX_SYSTEMS <= 32) ? makr.FastBitSet : makr.BitSet;
+
   /**
    * @private
    * @property {BitSet} _componentMask
    */
-  this._componentMask = new makr.BitSet(makr.config.MAX_COMPONENTS);
+  this._componentMask = new BitSetClass(makr.config.MAX_COMPONENTS);
 
   /**
    * @private
