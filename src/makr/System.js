@@ -5,14 +5,11 @@
  * @constructor
  */
 makr.System = function() {
-  // Choose the BitSet class according to the engine configuration
-  var BitSetClass = (makr.config.MAX_COMPONENTS <= 32 && makr.config.MAX_SYSTEMS <= 32) ? makr.FastBitSet : makr.BitSet;
-
   /**
    * @private
    * @property {BitSet} _componentMask
    */
-  this._componentMask = new BitSetClass(makr.config.MAX_COMPONENTS);
+  this._componentMask = makr.config.MAX_COMPONENTS <= 32 ? new makr.FastBitSet() : new makr.BitSet(makr.config.MAX_COMPONENTS);
 
   /**
    * @private
@@ -93,8 +90,9 @@ makr.System.prototype = {
    * @param {Entity} entity
    */
   _addEntity: function(entity) {
-    if (this._entities.indexOf(entity) < 0) {
-      this._entities.push(entity);
+    var entities = this._entities;
+    if (entities.indexOf(entity) < 0) {
+      entities.push(entity);
       this.onAdded(entity);
     }
   },
@@ -104,10 +102,11 @@ makr.System.prototype = {
    * @param {Entity} entity
    */
   _removeEntity: function(entity) {
-    var i = this._entities.indexOf(entity);
+    var entities = this._entities;
+    var i = entities.indexOf(entity);
     if (i >= 0) {
-      this._entities[i] = this._entities[this._entities.length - 1];
-      this._entities.pop();
+      entities[i] = entities[entities.length - 1];
+      entities.pop();
       this.onRemoved(entity);
     }
   }
