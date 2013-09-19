@@ -37,8 +37,7 @@ function CollisionSystem() {
   this.registerComponent(TYPE_RADIUS);
 }
 
-CollisionSystem.prototype = Object.create(makr.IteratingSystem.prototype);
-CollisionSystem.prototype.constructor = CollisionSystem;
+makr.inherits(CollisionSystem, makr.IteratingSystem);
 
 CollisionSystem.prototype.onBegin = function() {
   this._width = document.body.clientWidth;
@@ -67,8 +66,7 @@ function GravitySystem() {
   this.registerComponent(TYPE_VELOCITY);
 }
 
-GravitySystem.prototype = Object.create(makr.IteratingSystem.prototype);
-GravitySystem.prototype.constructor = GravitySystem;
+makr.inherits(GravitySystem, makr.IteratingSystem);
 
 GravitySystem.prototype.process = function(entity, elapsed) {
   entity.get(TYPE_VELOCITY).y += elapsed * 500;
@@ -81,8 +79,7 @@ function MovementSystem() {
   this.registerComponent(TYPE_VELOCITY);
 }
 
-MovementSystem.prototype = Object.create(makr.IteratingSystem.prototype);
-MovementSystem.prototype.constructor = MovementSystem;
+makr.inherits(MovementSystem, makr.IteratingSystem);
 
 MovementSystem.prototype.process = function(entity, elapsed) {
   var position = entity.get(TYPE_POSITION);
@@ -98,8 +95,7 @@ function LifetimeSystem() {
   this.registerComponent(TYPE_CLOCK);
 }
 
-LifetimeSystem.prototype = Object.create(makr.IteratingSystem.prototype);
-LifetimeSystem.prototype.constructor = LifetimeSystem;
+makr.inherits(LifetimeSystem, makr.IteratingSystem);
 
 LifetimeSystem.prototype.process = function(entity, elapsed) {
   var clock = entity.get(TYPE_CLOCK);
@@ -119,8 +115,7 @@ function RenderingSystem() {
   this.registerComponent(TYPE_CLOCK);
 }
 
-RenderingSystem.prototype = Object.create(makr.IteratingSystem.prototype);
-RenderingSystem.prototype.constructor = RenderingSystem;
+makr.inherits(RenderingSystem, makr.IteratingSystem);
 
 RenderingSystem.prototype.onRegistered = function() {
   this.canvas = document.getElementById('game');
@@ -216,4 +211,3 @@ function rand(min, max) {
 function toHex(r, g, b) {
   return '#' + r.toString(16) + g.toString(16) + b.toString(16);
 }
-

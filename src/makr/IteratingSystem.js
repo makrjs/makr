@@ -7,8 +7,7 @@ makr.IteratingSystem = function() {
   makr.System.call(this);
 };
 
-makr.IteratingSystem.prototype = Object.create(makr.System.prototype);
-makr.IteratingSystem.prototype.constructor = makr.IteratingSystem;
+makr.inherits(makr.IteratingSystem, makr.System);
 
 makr.IteratingSystem.prototype.processEntities = function(entities, elapsed) {
   var i = 0;

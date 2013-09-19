@@ -7,6 +7,7 @@
     "grunt-contrib-jshint": "~0.6",
     "grunt-contrib-watch": "~0.5",
     "grunt-contrib-yuidoc": "~0.3",
+    "grunt-benchmark": "~0.2",
     "grunt-mocha-test": "~0.6",
     "should": "*"
   }

@@ -4,11 +4,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
+  grunt.loadNpmTasks('grunt-benchmark');
   grunt.loadNpmTasks('grunt-mocha-test');
 
   var files = [
     'src/makr.js',
+    'src/makr/Class.js',
     'src/makr/BitSet.js',
+    'src/makr/FastBitSet.js',
     'src/makr/Entity.js',
     'src/makr/World.js',
     'src/makr/System.js',
@@ -21,7 +24,7 @@ module.exports = function(grunt) {
       options: {
         '-W030': true,
       },
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'examples/**/*.js'],
+      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'examples/**/*.js', 'benchmark/*.js'],
     },
     watch: {
       files: ['<%= jshint.files %>'],
@@ -53,8 +56,20 @@ module.exports = function(grunt) {
         src: 'test/**/*.js',
       },
     },
+    benchmark: {
+      entities: {
+        src: 'benchmark/entities-*.js',
+        dest: 'dist/benchmark-entities.csv',
+      },
+      systems: {
+        src: 'benchmark/systems-*.js',
+        dest: 'dist/benchmark-systems.csv',
+      },
+    },
   });
 
-  grunt.registerTask('default', ['jshint', 'concat', 'mochaTest']);
+  grunt.registerTask('default', ['jshint', 'concat', 'yuidoc']);
+  grunt.registerTask('test', ['concat', 'mochaTest']);
+  grunt.registerTask('perf', ['concat', 'benchmark']);
 
 };
