@@ -92,7 +92,7 @@ describe('Entity', function() {
       var entity = world.create();
 
       entity.kill();
-      world.update();
+      world.loopStart();
 
       should.equal(entity.alive, false);
     });

@@ -21,7 +21,7 @@ describe('World', function() {
       var e1 = world.create();
 
       world.kill(e0);
-      world.update();
+      world.loopStart();
 
       e0 = world.create();
 
@@ -36,7 +36,7 @@ describe('World', function() {
       var entity = world.create();
 
       world.kill(entity);
-      world.update();
+      world.loopStart();
 
       should.equal(entity.alive, false);
     });
