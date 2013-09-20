@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
       options: {
+        '-W014': true,
         '-W030': true,
       },
       files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'examples/**/*.js', 'benchmark/*.js'],

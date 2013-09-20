@@ -9,7 +9,9 @@ makr.System = function() {
    * @private
    * @property {BitSet} _componentMask
    */
-  this._componentMask = makr.config.MAX_COMPONENTS <= 32 ? new makr.FastBitSet() : new makr.BitSet(makr.config.MAX_COMPONENTS);
+  this._componentMask = makr.config.MAX_COMPONENTS <= 32
+    ? new makr.FastBitSet()
+    : new makr.BitSet(makr.config.MAX_COMPONENTS);
 
   /**
    * @private

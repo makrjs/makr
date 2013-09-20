@@ -38,13 +38,17 @@ makr.Entity = function(world, id) {
    * @private
    * @property {BitSet} _componentMask
    */
-  this._componentMask = makr.config.MAX_COMPONENTS <= 32 ? new makr.FastBitSet() : new makr.BitSet(makr.config.MAX_COMPONENTS);
+  this._componentMask = makr.config.MAX_COMPONENTS <= 32
+    ? new makr.FastBitSet()
+    : new makr.BitSet(makr.config.MAX_COMPONENTS);
 
   /**
    * @private
    * @property {BitSet} _systemMask
    */
-  this._systemMask = makr.config.MAX_SYSTEMS <= 32 ? new makr.FastBitSet() : new makr.BitSet(makr.config.MAX_SYSTEMS);
+  this._systemMask = makr.config.MAX_SYSTEMS <= 32
+    ? new makr.FastBitSet()
+    : new makr.BitSet(makr.config.MAX_SYSTEMS);
 };
 
 makr.Entity.prototype = {
