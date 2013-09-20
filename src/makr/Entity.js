@@ -56,7 +56,7 @@ function Entity(world, id) {
  * @param  {Uint} type
  * @return {Object}
  */
-Entity.prototype.get = function get(type) {
+Entity.prototype.get = function Entity_get(type) {
   return this._world._getComponent(this, type);
 };
 
@@ -65,7 +65,7 @@ Entity.prototype.get = function get(type) {
  * @param {Object} component
  * @param {Uint} type
  */
-Entity.prototype.add = function add(component, type) {
+Entity.prototype.add = function Entity_add(component, type) {
   this._world._addComponent(this, component, type);
 };
 
@@ -73,28 +73,28 @@ Entity.prototype.add = function add(component, type) {
  * @method remove
  * @param {Uint} type
  */
-Entity.prototype.remove = function remove(type) {
+Entity.prototype.remove = function Entity_remove(type) {
   this._world._removeComponent(this, type);
 };
 
 /**
  * @method clear
  */
-Entity.prototype.clear = function clear() {
+Entity.prototype.clear = function Entity_clear() {
   this._world._removeComponents(this);
 };
 
 /**
  * @method kill
  */
-Entity.prototype.kill = function kill() {
+Entity.prototype.kill = function Entity_kill() {
   this._world.kill(this);
 };
 
 /**
  * @method refresh
  */
-Entity.prototype.refresh = function refresh() {
+Entity.prototype.refresh = function Entity_refresh() {
   this._world.refresh(this);
 };
 

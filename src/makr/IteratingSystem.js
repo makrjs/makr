@@ -20,7 +20,7 @@ IteratingSystem.prototype = Object.create(System.prototype, {
 /**
  * @override
  */
-IteratingSystem.prototype.processEntities = function processEntities(entities, elapsed) {
+IteratingSystem.prototype.processEntities = function IteratingSystem_processEntities(entities, elapsed) {
   var i = 0;
   var n = entities.length;
 
@@ -34,4 +34,4 @@ IteratingSystem.prototype.processEntities = function processEntities(entities, e
  * @param {Entity} entity
  * @param {Float} elapsed
  */
-IteratingSystem.prototype.process = function process(entity, elapsed) {};
+IteratingSystem.prototype.process = function IteratingSystem_process(entity, elapsed) {};

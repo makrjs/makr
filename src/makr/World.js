@@ -56,7 +56,7 @@ function World() {
  * @method registerSystem
  * @param {System} system
  */
-World.prototype.registerSystem = function registerSystem(system) {
+World.prototype.registerSystem = function World_registerSystem(system) {
   if (this._systems.indexOf(system) >= 0) {
     throw "Cannot register a system twice";
   }
@@ -73,7 +73,7 @@ World.prototype.registerSystem = function registerSystem(system) {
  * @method create
  * @return {Entity}
  */
-World.prototype.create = function create() {
+World.prototype.create = function World_create() {
   var entity;
   if (this._dead.length > 0) {
     // Revive entity
@@ -93,7 +93,7 @@ World.prototype.create = function create() {
  * @method kill
  * @param {Entity} entity
  */
-World.prototype.kill = function kill(entity) {
+World.prototype.kill = function World_kill(entity) {
   if (!entity._waitingForRemoval) {
     entity._waitingForRemoval = true;
     this._removed.push(entity);
@@ -106,7 +106,7 @@ World.prototype.kill = function kill(entity) {
  * @method refresh
  * @param {Entity} entity
  */
-World.prototype.refresh = function refresh(entity) {
+World.prototype.refresh = function World_refresh(entity) {
   if (!entity._waitingForRefresh) {
     entity._waitingForRefresh = true;
     this._refreshed.push(entity);
@@ -119,7 +119,7 @@ World.prototype.refresh = function refresh(entity) {
  * @method update
  * @param {Float} elapsed
  */
-World.prototype.update = function update(elapsed) {
+World.prototype.update = function World_update(elapsed) {
   // Process entities
   this.loopStart();
 
@@ -137,7 +137,7 @@ World.prototype.update = function update(elapsed) {
  *
  * @method loopStart
  */
-World.prototype.loopStart = function loopStart() {
+World.prototype.loopStart = function World_loopStart() {
   var i;
 
   // Process entities queued for removal
@@ -160,7 +160,7 @@ World.prototype.loopStart = function loopStart() {
  * @method _refreshEntity
  * @param {Entity} entity
  */
-World.prototype._refreshEntity = function _refreshEntity(entity) {
+World.prototype._refreshEntity = function World__refreshEntity(entity) {
   // Unset refresh flag
   entity._waitingForRefresh = false;
 
@@ -189,7 +189,7 @@ World.prototype._refreshEntity = function _refreshEntity(entity) {
  * @method _removeEntity
  * @param {Entity} entity
  */
-World.prototype._removeEntity = function _removeEntity(entity) {
+World.prototype._removeEntity = function World__removeEntity(entity) {
   if (entity._alive) {
     // Unset removal flag
     entity._waitingForRemoval = false;
@@ -219,7 +219,7 @@ World.prototype._removeEntity = function _removeEntity(entity) {
  * @param  {Uint} type
  * @return {Object}
  */
-World.prototype._getComponent = function _getComponent(entity, type) {
+World.prototype._getComponent = function World__getComponent(entity, type) {
   if (entity._componentMask.get(type)) {
     return this._componentBags[entity._id][type];
   }
@@ -234,7 +234,7 @@ World.prototype._getComponent = function _getComponent(entity, type) {
  * @param {Object} component
  * @param {type} type
  */
-World.prototype._addComponent = function _addComponent(entity, component, type) {
+World.prototype._addComponent = function World__addComponent(entity, component, type) {
   entity._componentMask.set(type, 1);
 
   this._componentBags[entity._id] || (this._componentBags[entity._id] = []);
@@ -249,7 +249,7 @@ World.prototype._addComponent = function _addComponent(entity, component, type) 
  * @param {Entity} entity
  * @param {Uint} type
  */
-World.prototype._removeComponent = function _removeComponent(entity, type) {
+World.prototype._removeComponent = function World__removeComponent(entity, type) {
   entity._componentMask.set(type, 0);
   this.refresh(entity);
 };
@@ -259,7 +259,7 @@ World.prototype._removeComponent = function _removeComponent(entity, type) {
  * @method _removeComponents
  * @param {Entity} entity
  */
-World.prototype._removeComponents = function _removeComponents(entity) {
+World.prototype._removeComponents = function World__removeComponents(entity) {
   entity._componentMask.reset();
   this.refresh(entity);
 };

@@ -27,7 +27,7 @@ function BitSet(size) {
  * @param {Uint} index
  * @param {Boolean} value
  */
-BitSet.prototype.set = function set(index, value) {
+BitSet.prototype.set = function BitSet_set(index, value) {
   var wordOffset = index / 32 | 0;
   var bitOffset = index - wordOffset * 32;
 
@@ -43,7 +43,7 @@ BitSet.prototype.set = function set(index, value) {
  * @param  {Uint} index
  * @return {Boolean}
  */
-BitSet.prototype.get = function get(index) {
+BitSet.prototype.get = function BitSet_get(index) {
   var wordOffset = index / 32 | 0;
   var bitOffset = index - wordOffset * 32;
 
@@ -53,7 +53,7 @@ BitSet.prototype.get = function get(index) {
 /**
  * @method reset
  */
-BitSet.prototype.reset = function reset() {
+BitSet.prototype.reset = function BitSet_reset() {
   var words = this._words;
   var i = this._length;
 
@@ -67,7 +67,7 @@ BitSet.prototype.reset = function reset() {
  * @param  {BitSet} other
  * @return {Boolean}
  */
-BitSet.prototype.contains = function contains(other) {
+BitSet.prototype.contains = function BitSet_contains(other) {
   var words = this._words;
   var i = this._length;
 

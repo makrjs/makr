@@ -15,7 +15,7 @@ function FastBitSet() {
  * @param {Uint} index
  * @param {Boolean} value
  */
-FastBitSet.prototype.set = function set(index, value) {
+FastBitSet.prototype.set = function FastBitSet_set(index, value) {
   if (value) {
     this._bits |= 1 << index;
   } else {
@@ -28,14 +28,14 @@ FastBitSet.prototype.set = function set(index, value) {
  * @param  {Uint} index
  * @return {Boolean}
  */
-FastBitSet.prototype.get = function get(index) {
+FastBitSet.prototype.get = function FastBitSet_get(index) {
   return !!(this._bits & (1 << index));
 };
 
 /**
  * @method reset
  */
-FastBitSet.prototype.reset = function reset() {
+FastBitSet.prototype.reset = function FastBitSet_reset() {
   this._bits = 0;
 };
 
@@ -44,6 +44,6 @@ FastBitSet.prototype.reset = function reset() {
  * @param  {FastBitSet} other
  * @return {Boolean}
  */
-FastBitSet.prototype.contains = function contains(other) {
+FastBitSet.prototype.contains = function FastBitSet_contains(other) {
   return (this._bits & other._bits) == other._bits;
 };

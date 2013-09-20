@@ -36,7 +36,7 @@ function System() {
  * @method registerComponent
  * @param {Uint} type
  */
-System.prototype.registerComponent = function registerComponent(type) {
+System.prototype.registerComponent = function System_registerComponent(type) {
   this._componentMask.set(type, 1);
 };
 
@@ -45,7 +45,7 @@ System.prototype.registerComponent = function registerComponent(type) {
  * @method update
  * @param {Float} elapsed
  */
-System.prototype.update = function update(elapsed) {
+System.prototype.update = function System_update(elapsed) {
   if (this.enabled) {
     this.onBegin();
     this.processEntities(this._entities, elapsed);
@@ -58,24 +58,24 @@ System.prototype.update = function update(elapsed) {
  * @param {Entity[]} entities
  * @param {Float} elapsed
  */
-System.prototype.processEntities = function processEntities(entities, elapsed) {};
+System.prototype.processEntities = function System_processEntities(entities, elapsed) {};
 
 /**
  * @method onRegistered
  */
-System.prototype.onRegistered = function onRegistered() {};
+System.prototype.onRegistered = function System_onRegistered() {};
 
 /**
  * @method onBegin
  */
-System.prototype.onBegin = function onBegin() {};
+System.prototype.onBegin = function System_onBegin() {};
 
 /**
  * Called after the end of processing.
  *
  * @method onEnd
  */
-System.prototype.onEnd = function onEnd() {};
+System.prototype.onEnd = function System_onEnd() {};
 
 /**
  * Called when an entity is added to this system
@@ -83,7 +83,7 @@ System.prototype.onEnd = function onEnd() {};
  * @method onAdded
  * @param {Entity} entity
  */
-System.prototype.onAdded = function onAdded(entity) {};
+System.prototype.onAdded = function System_onAdded(entity) {};
 
 /**
  * Called when an entity is removed from this system
@@ -91,14 +91,14 @@ System.prototype.onAdded = function onAdded(entity) {};
  * @method onRemoved
  * @param {Entity} entity
  */
-System.prototype.onRemoved = function onRemoved(entity) {};
+System.prototype.onRemoved = function System_onRemoved(entity) {};
 
 /**
  * @private
  * @method _addEntity
  * @param {Entity} entity
  */
-System.prototype._addEntity = function _addEntity(entity) {
+System.prototype._addEntity = function System__addEntity(entity) {
   var entities = this._entities;
   if (entities.indexOf(entity) < 0) {
     entities.push(entity);
@@ -111,7 +111,7 @@ System.prototype._addEntity = function _addEntity(entity) {
  * @method _removeEntity
  * @param {Entity} entity
  */
-System.prototype._removeEntity = function _removeEntity(entity) {
+System.prototype._removeEntity = function System__removeEntity(entity) {
   var entities = this._entities;
   var i = entities.indexOf(entity);
   if (i >= 0) {
