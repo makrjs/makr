@@ -3,7 +3,7 @@
  * @class Entity
  * @constructor
  */
-makr.Entity = function(world, id) {
+function Entity(world, id) {
   /**
    * @private
    * @property {Uint} _id
@@ -38,67 +38,70 @@ makr.Entity = function(world, id) {
    * @private
    * @property {BitSet} _componentMask
    */
-  this._componentMask = makr.config.MAX_COMPONENTS <= 32
-    ? new makr.FastBitSet()
-    : new makr.BitSet(makr.config.MAX_COMPONENTS);
+  this._componentMask = makr.MAX_COMPONENTS <= 32
+    ? new FastBitSet()
+    : new BitSet(makr.MAX_COMPONENTS);
 
   /**
    * @private
    * @property {BitSet} _systemMask
    */
-  this._systemMask = makr.config.MAX_SYSTEMS <= 32
-    ? new makr.FastBitSet()
-    : new makr.BitSet(makr.config.MAX_SYSTEMS);
+  this._systemMask = makr.MAX_SYSTEMS <= 32
+    ? new FastBitSet()
+    : new BitSet(makr.MAX_SYSTEMS);
+}
+
+/**
+ * @method get
+ * @param  {Uint} type
+ * @return {Object}
+ */
+Entity.prototype.get = function get(type) {
+  return this._world._getComponent(this, type);
 };
 
-makr.Entity.prototype = {
-  /**
-   * @method get
-   * @param  {Uint} type
-   * @return {Object}
-   */
-  get: function(type) {
-    return this._world._getComponent(this, type);
-  },
-  /**
-   * @method add
-   * @param {Object} component
-   * @param {Uint} type
-   */
-  add: function(component, type) {
-    this._world._addComponent(this, component, type);
-  },
-  /**
-   * @method remove
-   * @param {Uint} type
-   */
-  remove: function(type) {
-    this._world._removeComponent(this, type);
-  },
-  /**
-   * @method clear
-   */
-  clear: function() {
-    this._world._removeComponents(this);
-  },
-  /**
-   * @method kill
-   */
-  kill: function() {
-    this._world.kill(this);
-  },
-  /**
-   * @method refresh
-   */
-  refresh: function() {
-    this._world.refresh(this);
-  }
+/**
+ * @method add
+ * @param {Object} component
+ * @param {Uint} type
+ */
+Entity.prototype.add = function add(component, type) {
+  this._world._addComponent(this, component, type);
+};
+
+/**
+ * @method remove
+ * @param {Uint} type
+ */
+Entity.prototype.remove = function remove(type) {
+  this._world._removeComponent(this, type);
+};
+
+/**
+ * @method clear
+ */
+Entity.prototype.clear = function clear() {
+  this._world._removeComponents(this);
+};
+
+/**
+ * @method kill
+ */
+Entity.prototype.kill = function kill() {
+  this._world.kill(this);
+};
+
+/**
+ * @method refresh
+ */
+Entity.prototype.refresh = function refresh() {
+  this._world.refresh(this);
 };
 
 /**
  * @property {Uint} id
  */
-Object.defineProperty(makr.Entity.prototype, 'id', {
+Object.defineProperty(Entity.prototype, 'id', {
   get: function() {
     return this._id;
   }
@@ -107,7 +110,7 @@ Object.defineProperty(makr.Entity.prototype, 'id', {
 /**
  * @property {Boolean} alive
  */
-Object.defineProperty(makr.Entity.prototype, 'alive', {
+Object.defineProperty(Entity.prototype, 'alive', {
   get: function() {
     return this._alive;
   }

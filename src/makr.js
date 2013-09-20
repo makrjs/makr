@@ -1,13 +1,17 @@
 /**
  * @module makr
+ * @param {Object} config
  */
-var makr = makr || {
-  config: {
-    MAX_COMPONENTS: 32,
-    MAX_SYSTEMS: 32
+function makr(config) {
+  if (config) {
+    for (var p in config) {
+      if (config.hasOwnProperty(p)) {
+        makr[p] = config[p];
+      }
+    }
   }
-};
-
-if (typeof module !== 'undefined') {
-  module.exports = makr;
 }
+
+// Install default config
+makr.MAX_COMPONENTS = 32;
+makr.MAX_SYSTEMS = 32;

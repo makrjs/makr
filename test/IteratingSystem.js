@@ -7,7 +7,8 @@ function IterationTestSystem() {
   this.i = 0;
 }
 
-makr.inherits(IterationTestSystem, makr.IteratingSystem);
+IterationTestSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+IterationTestSystem.prototype.constructor = IterationTestSystem;
 
 IterationTestSystem.prototype.onBegin = function() {
   this.i = 0;

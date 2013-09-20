@@ -19,7 +19,9 @@ module.exports = {
       this.registerComponent(TYPE_MOTION);
     }
 
-    makr.inherits(MovementSystem, makr.IteratingSystem);
+    MovementSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+    MovementSystem.prototype.constructor = MovementSystem;
+
     return MovementSystem;
   })(),
   CollisionSystem: (function() {
@@ -30,7 +32,9 @@ module.exports = {
       this.registerComponent(TYPE_BODY);
     }
 
-    makr.inherits(CollisionSystem, makr.IteratingSystem);
+    CollisionSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+    CollisionSystem.prototype.constructor = CollisionSystem;
+
     return CollisionSystem;
   })(),
   RenderingSystem: (function() {
@@ -40,7 +44,9 @@ module.exports = {
       this.registerComponent(TYPE_DISPLAY);
     }
 
-    makr.inherits(RenderingSystem, makr.IteratingSystem);
+    RenderingSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+    RenderingSystem.prototype.constructor = RenderingSystem;
+
     return RenderingSystem;
   })(),
 };

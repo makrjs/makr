@@ -37,7 +37,8 @@ function CollisionSystem() {
   this.registerComponent(TYPE_RADIUS);
 }
 
-makr.inherits(CollisionSystem, makr.IteratingSystem);
+CollisionSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+CollisionSystem.prototype.constructor = CollisionSystem;
 
 CollisionSystem.prototype.onBegin = function() {
   this._width = document.body.clientWidth;
@@ -66,7 +67,8 @@ function GravitySystem() {
   this.registerComponent(TYPE_VELOCITY);
 }
 
-makr.inherits(GravitySystem, makr.IteratingSystem);
+GravitySystem.prototype = Object.create(makr.IteratingSystem.prototype);
+GravitySystem.prototype.constructor = GravitySystem;
 
 GravitySystem.prototype.process = function(entity, elapsed) {
   entity.get(TYPE_VELOCITY).y += elapsed * 500;
@@ -79,7 +81,8 @@ function MovementSystem() {
   this.registerComponent(TYPE_VELOCITY);
 }
 
-makr.inherits(MovementSystem, makr.IteratingSystem);
+MovementSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+MovementSystem.prototype.constructor = MovementSystem;
 
 MovementSystem.prototype.process = function(entity, elapsed) {
   var position = entity.get(TYPE_POSITION);
@@ -95,7 +98,8 @@ function LifetimeSystem() {
   this.registerComponent(TYPE_CLOCK);
 }
 
-makr.inherits(LifetimeSystem, makr.IteratingSystem);
+LifetimeSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+LifetimeSystem.prototype.constructor = LifetimeSystem;
 
 LifetimeSystem.prototype.process = function(entity, elapsed) {
   var clock = entity.get(TYPE_CLOCK);
@@ -115,7 +119,8 @@ function RenderingSystem() {
   this.registerComponent(TYPE_CLOCK);
 }
 
-makr.inherits(RenderingSystem, makr.IteratingSystem);
+RenderingSystem.prototype = Object.create(makr.IteratingSystem.prototype);
+RenderingSystem.prototype.constructor = RenderingSystem;
 
 RenderingSystem.prototype.onRegistered = function() {
   this.canvas = document.getElementById('game');
@@ -147,6 +152,12 @@ RenderingSystem.prototype.process = function(entity, elapsed) {
 
 // World
 // -----
+
+// Configure makr (optional)
+makr({
+  MAX_COMPONENTS: 16,
+  MAX_SYSTEMS: 16
+});
 
 var world = new makr.World();
 

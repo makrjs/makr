@@ -3,13 +3,24 @@
  * @extends {System}
  * @constructor
  */
-makr.IteratingSystem = function() {
-  makr.System.call(this);
-};
+function IteratingSystem() {
+  System.call(this);
+}
 
-makr.inherits(makr.IteratingSystem, makr.System);
+// Extend System
+IteratingSystem.prototype = Object.create(System.prototype, {
+  constructor: {
+    value: IteratingSystem,
+    enumerable: false,
+    writable: true,
+    configurable: true
+  }
+});
 
-makr.IteratingSystem.prototype.processEntities = function(entities, elapsed) {
+/**
+ * @override
+ */
+IteratingSystem.prototype.processEntities = function processEntities(entities, elapsed) {
   var i = 0;
   var n = entities.length;
 
@@ -23,4 +34,4 @@ makr.IteratingSystem.prototype.processEntities = function(entities, elapsed) {
  * @param {Entity} entity
  * @param {Float} elapsed
  */
-makr.IteratingSystem.prototype.process = function(entity, elapsed) {};
+IteratingSystem.prototype.process = function process(entity, elapsed) {};

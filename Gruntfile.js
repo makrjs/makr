@@ -8,14 +8,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
 
   var files = [
+    'support/head.js',
     'src/makr.js',
-    'src/makr/Class.js',
     'src/makr/BitSet.js',
     'src/makr/FastBitSet.js',
     'src/makr/Entity.js',
     'src/makr/World.js',
     'src/makr/System.js',
     'src/makr/IteratingSystem.js',
+    'support/export.js',
+    'support/tail.js',
   ];
 
   grunt.initConfig({

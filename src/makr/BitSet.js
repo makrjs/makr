@@ -3,7 +3,7 @@
  * @constructor
  * @param {Uint} size
  */
-makr.BitSet = function(size) {
+function BitSet(size) {
   /**
    * @private
    * @property {Uint} _length
@@ -20,65 +20,66 @@ makr.BitSet = function(size) {
   while (length--) {
     words[length] = 0;
   }
+}
+
+/**
+ * @method set
+ * @param {Uint} index
+ * @param {Boolean} value
+ */
+BitSet.prototype.set = function set(index, value) {
+  var wordOffset = index / 32 | 0;
+  var bitOffset = index - wordOffset * 32;
+
+  if (value) {
+    this._words[wordOffset] |= 1 << bitOffset;
+  } else {
+    this._words[wordOffset] &= ~(1 << bitOffset);
+  }
 };
 
-makr.BitSet.prototype = {
-  /**
-   * @method set
-   * @param {Uint} index
-   * @param {Boolean} value
-   */
-  set: function(index, value) {
-    var wordOffset = index / 32 | 0;
-    var bitOffset = index - wordOffset * 32;
+/**
+ * @method get
+ * @param  {Uint} index
+ * @return {Boolean}
+ */
+BitSet.prototype.get = function get(index) {
+  var wordOffset = index / 32 | 0;
+  var bitOffset = index - wordOffset * 32;
 
-    if (value) {
-      this._words[wordOffset] |= 1 << bitOffset;
-    } else {
-      this._words[wordOffset] &= ~(1 << bitOffset);
-    }
-  },
-  /**
-   * @method get
-   * @param  {Uint} index
-   * @return {Boolean}
-   */
-  get: function(index) {
-    var wordOffset = index / 32 | 0;
-    var bitOffset = index - wordOffset * 32;
+  return !!(this._words[wordOffset] & (1 << bitOffset));
+};
 
-    return !!(this._words[wordOffset] & (1 << bitOffset));
-  },
-  /**
-   * @method reset
-   */
-  reset: function() {
-    var words = this._words;
-    var i = this._length;
+/**
+ * @method reset
+ */
+BitSet.prototype.reset = function reset() {
+  var words = this._words;
+  var i = this._length;
 
-    while (i--) {
-      words[i] = 0;
-    }
-  },
-  /**
-   * @method contains
-   * @param  {BitSet} other
-   * @return {Boolean}
-   */
-  contains: function(other) {
-    var words = this._words;
-    var i = this._length;
+  while (i--) {
+    words[i] = 0;
+  }
+};
 
-    if (i != other._length) {
+/**
+ * @method contains
+ * @param  {BitSet} other
+ * @return {Boolean}
+ */
+BitSet.prototype.contains = function contains(other) {
+  var words = this._words;
+  var i = this._length;
+
+  if (i != other._length) {
+    return false;
+  }
+
+  while (i--) {
+    if ((words[i] & other._words[i]) != other._words[i]) {
       return false;
     }
-
-    while (i--) {
-      if ((words[i] & other._words[i]) != other._words[i]) {
-        return false;
-      }
-    }
-
-    return true;
   }
+
+  return true;
 };

@@ -7,7 +7,8 @@ function DummySystem() {
   this.registerComponent(1);
 }
 
-makr.inherits(DummySystem, makr.IteratingSystem);
+DummySystem.prototype = Object.create(makr.IteratingSystem.prototype);
+DummySystem.prototype.constructor = DummySystem;
 
 describe('System', function() {
   var world;
