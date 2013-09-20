@@ -49,6 +49,21 @@ describe('System', function() {
       system._entities.indexOf(entity).should.equal(-1);
     });
 
+    it('should remove an entity when all its components are removed', function() {
+      var entity = world.create();
+
+      entity.add({}, 0);
+      entity.add({}, 1);
+      world.loopStart();
+
+      system._entities.indexOf(entity).should.not.equal(-1);
+
+      entity.clear();
+      world.loopStart();
+
+      system._entities.indexOf(entity).should.equal(-1);
+    });
+
     it('should remove an entity when killed', function() {
       var entity = world.create();
 
