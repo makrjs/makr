@@ -52,7 +52,7 @@ module.exports = {
         world.loopStart();
       },
       fn: function() {
-        var i = 200;
+        i = 200;
         while (i--) {
           world.kill(entities[i]);
         }

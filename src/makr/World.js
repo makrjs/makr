@@ -134,21 +134,21 @@ makr.World.prototype = {
    * @method loopStart
    */
   loopStart: function() {
-    var i, entities;
+    var i;
 
     // Process entities queued for removal
-    for (entities = this._removed, i = entities.length; i--;) {
-      this._removeEntity(entities[i]);
+    for (i = this._removed.length; i--;) {
+      this._removeEntity(this._removed[i]);
     }
 
-    entities.length = 0;
+    this._removed.length = 0;
 
     // Process entities queded for refresh
-    for (entities = this._refreshed, i = entities.length; i--;) {
-      this._refreshEntity(entities[i]);
+    for (i = this._refreshed.length; i--;) {
+      this._refreshEntity(this._refreshed[i]);
     }
 
-    entities.length = 0;
+    this._refreshed.length = 0;
   },
   /**
    * @private
@@ -242,7 +242,6 @@ makr.World.prototype = {
    */
   _removeComponent: function(entity, type) {
     entity._componentMask.set(type, 0);
-
     this.refresh(entity);
   },
   /**
@@ -252,5 +251,6 @@ makr.World.prototype = {
    */
   _removeComponents: function(entity) {
     entity._componentMask.reset();
+    this.refresh(entity);
   }
 };
