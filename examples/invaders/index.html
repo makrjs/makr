@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    #wrapper {
+      position: relative;
+      width: 800px;
+      margin: 10px auto;
+    }
+
+    #controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font: 13px sans-serif;
+      color: #ddd;
+    }
+
+    kbd {
+      border: 1px solid #fff;
+      border-radius: 3px;
+      background: #ddd;
+      color: #000;
+      padding: 4px;
+    }
+
+    p {
+      margin: 16px 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <canvas id="game"></canvas>
+    <div id="controls">
+      <p><kbd>LEFT</kbd> and <kbd>RIGHT</kbd> Move ship</p>
+      <p><kbd>SPACE</kbd> Shoot</p>
+    </div>
+  </div>
+  <script src="../../dist/makr.js"></script>
+  <script src="../lib/pixi.min.js"></script>
+  <script src="../lib/utils.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/systems.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    runGame();
+  </script>
+</body>
+</html>
