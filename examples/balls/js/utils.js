@@ -48,3 +48,16 @@ function rand(min, max) {
 function toHex(r, g, b) {
   return '#' + r.toString(16) + g.toString(16) + b.toString(16);
 }
+
+function inherits(ctor, superCtor, methods) {
+  ctor.prototype = Object.create(superCtor.prototype);
+  ctor.prototype.constructor = ctor;
+
+  if (methods) {
+    for (var p in methods) {
+      if (methods.hasOwnProperty(p)) {
+        ctor.prototype[p] = methods[p];
+      }
+    }
+  }
+}
