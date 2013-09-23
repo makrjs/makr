@@ -10,7 +10,7 @@ function GravitySystem() {
 GravitySystem.POWER = 500;
 
 inherits(GravitySystem, makr.IteratingSystem, {
-  process: function (entity, elapsed) {
+  process: function(entity, elapsed) {
     entity.get(ComponentRegister.get(Velocity)).dy += elapsed * GravitySystem.POWER;
   }
 });
@@ -30,7 +30,7 @@ function CollisionSystem(viewport) {
 CollisionSystem.FRICTION = 0.95;
 
 inherits(CollisionSystem, makr.IteratingSystem, {
-  process: function (entity, elapsed) {
+  process: function(entity, elapsed) {
     var position = entity.get(ComponentRegister.get(Position));
     var velocity = entity.get(ComponentRegister.get(Velocity));
     var radius = entity.get(ComponentRegister.get(Radius));
@@ -56,7 +56,7 @@ function MovementSystem() {
 }
 
 inherits(MovementSystem, makr.IteratingSystem, {
-  process: function (entity, elapsed) {
+  process: function(entity, elapsed) {
     var position = entity.get(ComponentRegister.get(Position));
     var velocity = entity.get(ComponentRegister.get(Velocity));
 
@@ -75,7 +75,7 @@ function LifetimeSystem() {
 }
 
 inherits(LifetimeSystem, makr.IteratingSystem, {
-  process: function (entity, elapsed) {
+  process: function(entity, elapsed) {
     var clock = entity.get(ComponentRegister.get(Clock));
 
     clock.t -= elapsed;
@@ -112,7 +112,7 @@ inherits(RenderingSystem, makr.IteratingSystem, {
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
-  process: function (entity, elapsed) {
+  process: function(entity, elapsed) {
     var position = entity.get(ComponentRegister.get(Position));
     var radius = entity.get(ComponentRegister.get(Radius));
     var color = entity.get(ComponentRegister.get(Color));

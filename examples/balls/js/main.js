@@ -1,12 +1,7 @@
 // World
 // -----
 
-// Configure makr (optional)
-makr({
-  MAX_COMPONENTS: 16,
-  MAX_SYSTEMS: 16
-});
-
+var paused = false;
 var world = new makr.World();
 
 // Register components
@@ -23,24 +18,22 @@ world.registerSystem(new MovementSystem());
 world.registerSystem(new RenderingSystem(Viewport, document.getElementById('game')));
 world.registerSystem(new LifetimeSystem());
 
+// Keyboard
+// --------
+
+window.addEventListener('keydown', function(e) {
+  var key = e.keyCode ? e.keyCode : e.which;
+
+  key == 32 && BallManager.createBalls(10);
+  key == 80 && (paused = !paused);
+
+  ~[32, 80].indexOf(key) && e.preventDefault();
+});
+
 // Main
 // ----
 
-var paused = false;
-
 function runGame() {
-  // Keyboard event: add balls
-  Mousetrap.bind('space', function(e) {
-    e.preventDefault();
-    BallManager.createBalls(10);
-  });
-
-  // Keyboard event: pause
-  Mousetrap.bind('p', function(e) {
-    e.preventDefault();
-    paused = !paused;
-  });
-
   // Ticker
   var now, time = Date.now();
   var ticker = function() {
@@ -49,6 +42,7 @@ function runGame() {
     time = now;
     requestAnimationFrame(ticker);
   };
+
   // Start the game loop
   ticker();
 }
