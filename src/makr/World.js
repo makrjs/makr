@@ -19,6 +19,10 @@ function World() {
    */
   this._nextEntityID = 0;
 
+  this._nextGroupId = 0;
+  this._groups = [];
+  this._groupIDs = {};
+
   /**
    * @private
    * @property {Entity[]} _alive
@@ -156,6 +160,90 @@ World.prototype.loopStart = function World_loopStart() {
 };
 
 /**
+ * Add the entity to the specified group.
+ *
+ * @method addToGroup
+ * @param {Entity} entity
+ * @param {String} groupName
+ */
+World.prototype.addToGroup = function World_addToGroup(entity, groupName) {
+  var group;
+  var groupID = this._groupIDs[groupName];
+  if (groupID === undefined) {
+    groupID = this._groupIDs[groupName] = this._nextGroupId++;
+    group = this._groups[groupID] = [];
+  } else {
+    group = this._groups[groupID];
+  }
+
+  if (!entity._groupMask.get(groupID)) {
+    entity._groupMask.set(groupID, 1);
+    group.push(entity);
+  }
+};
+
+/**
+ * Remove the entity from the specified group.
+ *
+ * @method removeFromGroup
+ * @param {Entity} entity
+ * @param {String} groupName
+ */
+World.prototype.removeFromGroup = function World_removeFromGroup(entity, groupName) {
+  var groupID = this._groupIDs[groupName];
+  if (groupID !== undefined) {
+    var group = this._groups[groupID];
+    if (entity._groupMask.get(groupID)) {
+      entity._groupMask.set(groupID, 0);
+      group[group.indexOf(entity)] = group[group.length - 1];
+      group.pop();
+    }
+  }
+};
+
+/**
+ * Remove the entity from all groups.
+ *
+ * @method removeFromGroups
+ * @param {Entity} entity
+ */
+World.prototype.removeFromGroups = function World_removeFromGroups(entity) {
+  for (var groupID = this._nextGroupId; groupID--;) {
+    if (entity._groupMask.get(groupID)) {
+      var group = this._groups[groupID];
+      group[group.indexOf(entity)] = group[group.length - 1];
+      group.pop();
+    }
+  }
+
+  entity._groupMask.reset();
+};
+
+/**
+ * Get all entities of the specified group.
+ *
+ * @method getEntitiesByGroup
+ * @param  {String} groupName
+ * @return {Entity[]}
+ */
+World.prototype.getEntitiesByGroup = function World_getGroup(groupName) {
+  var groupID = this._groupIDs[groupName];
+  return groupID !== undefined ? this._groups[groupID] : $EMPTY_ARRAY;
+};
+
+/**
+ * Get whether the entity is in the specified group.
+ *
+ * @param  {Entity} entity
+ * @param  {String} groupName
+ * @return {Boolean}
+ */
+World.prototype.isInGroup = function World_isInGroup(entity, groupName) {
+  var groupID = this._groupIDs[groupName];
+  return groupID !== undefined && entity._groupMask.get(groupID);
+};
+
+/**
  * @private
  * @method _refreshEntity
  * @param {Entity} entity
@@ -206,6 +294,9 @@ World.prototype._removeEntity = function World__removeEntity(entity) {
 
     // Reset component mask
     entity._componentMask.reset();
+
+    // Remove from groups
+    this.removeFromGroups(entity);
 
     // Refresh entity
     this._refreshEntity(entity);

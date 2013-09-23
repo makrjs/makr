@@ -40,5 +40,84 @@ describe('World', function() {
 
       should.equal(entity.alive, false);
     });
+
+    it('should remove the entity from all groups', function() {
+      var entity = world.create();
+
+      world.addToGroup(entity, 'test1');
+      world.addToGroup(entity, 'test2');
+      world.kill(entity);
+      world.loopStart();
+
+      world.isInGroup(entity, 'test1').should.equal(false);
+      world.isInGroup(entity, 'test2').should.equal(false);
+    });
+  });
+
+  describe('#addToGroup', function() {
+    it('should add an entity to the specified group without error', function() {
+      world.addToGroup(world.create(), 'test');
+    });
+  });
+
+  describe('#isInGroup', function() {
+    it('should check if an entity is in the specified group', function() {
+      var e0 = world.create();
+      var e1 = world.create();
+
+      world.addToGroup(e0, 'test');
+
+      world.isInGroup(e0, 'test').should.equal(true);
+      world.isInGroup(e1, 'test').should.equal(false);
+    });
+  });
+
+  describe('#removeFromGroup', function() {
+    it('should remove an entity from the specified group', function() {
+      var e0 = world.create();
+      var e1 = world.create();
+
+      world.addToGroup(e0, 'test');
+      world.removeFromGroup(e0, 'test');
+      world.removeFromGroup(e1, 'test');
+
+      world.isInGroup(e0, 'test').should.equal(false);
+      world.isInGroup(e1, 'test').should.equal(false);
+    });
+  });
+
+  describe('#removeFromGroups', function() {
+    it('should remove an entity from all specified groups', function() {
+      var entity = world.create();
+
+      world.addToGroup(entity, 'test1');
+      world.addToGroup(entity, 'test2');
+      world.addToGroup(entity, 'test3');
+      world.removeFromGroups(entity);
+
+      world.isInGroup(entity, 'test1').should.equal(false);
+      world.isInGroup(entity, 'test2').should.equal(false);
+      world.isInGroup(entity, 'test3').should.equal(false);
+    });
+  });
+
+  describe('#getEntitiesByGroup', function() {
+    it('should retrieve all entities of the specified group', function() {
+      var e0 = world.create();
+      var e1 = world.create();
+
+      var entity = world.create();
+
+      world.addToGroup(e0, 'test');
+      world.addToGroup(e1, 'test');
+
+      var testEntities = world.getEntitiesByGroup('test');
+      var voidEntities = world.getEntitiesByGroup('void');
+
+      testEntities.should.have.length(2);
+      voidEntities.should.have.length(0);
+
+      testEntities.should.eql([e0, e1]);
+    });
   });
 });

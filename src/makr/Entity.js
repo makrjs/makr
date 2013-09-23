@@ -44,6 +44,14 @@ function Entity(world, id) {
 
   /**
    * @private
+   * @property {BitSet} _groupMask
+   */
+  this._groupMask = makr.MAX_GROUPS <= 32
+    ? new FastBitSet()
+    : new BitSet(makr.MAX_GROUPS);
+
+  /**
+   * @private
    * @property {BitSet} _systemMask
    */
   this._systemMask = makr.MAX_SYSTEMS <= 32
@@ -89,13 +97,6 @@ Entity.prototype.clear = function Entity_clear() {
  */
 Entity.prototype.kill = function Entity_kill() {
   this._world.kill(this);
-};
-
-/**
- * @method refresh
- */
-Entity.prototype.refresh = function Entity_refresh() {
-  this._world.refresh(this);
 };
 
 /**

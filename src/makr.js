@@ -14,4 +14,10 @@ function makr(config) {
 
 // Install default config
 makr.MAX_COMPONENTS = 32;
+makr.MAX_GROUPS = 32;
 makr.MAX_SYSTEMS = 32;
+
+// Memory optimization
+// -------------------
+
+var $EMPTY_ARRAY = [];
