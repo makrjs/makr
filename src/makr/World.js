@@ -151,7 +151,7 @@ World.prototype.loopStart = function World_loopStart() {
 
   this._removed.length = 0;
 
-  // Process entities queded for refresh
+  // Process entities queued for refresh
   for (i = this._refreshed.length; i--;) {
     this._refreshEntity(this._refreshed[i]);
   }
