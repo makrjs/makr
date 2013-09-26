@@ -1,14 +1,27 @@
 {
   "name": "makrjs",
-  "version": "0.1.0",
+  "version": "0.1.0-snapshot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ooflorent/makrjs.git"
+  },
   "devDependencies": {
     "grunt": "~0.4",
     "grunt-contrib-concat": "~0.3",
     "grunt-contrib-jshint": "~0.6",
-    "grunt-contrib-watch": "~0.5",
+    "grunt-contrib-uglify": "~0.2",
     "grunt-contrib-yuidoc": "~0.3",
     "grunt-benchmark": "~0.2",
-    "grunt-mocha-test": "~0.6",
+    "grunt-simple-mocha": "~0.4.0",
     "should": "*"
-  }
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ooflorent/makrjs/blob/master/LICENSE"
+    }
+  ]
 }

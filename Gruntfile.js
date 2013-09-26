@@ -2,10 +2,10 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-benchmark');
-  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-simple-mocha');
 
   var files = [
     'support/head.js',
@@ -27,16 +27,29 @@ module.exports = function(grunt) {
         '-W014': true,
         '-W030': true,
       },
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'examples/**/*.js', 'benchmark/*.js'],
-    },
-    watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint'],
+      makr: {
+        src: ['Gruntfile.js', 'src/**/*.js'],
+      },
+      benchmarks: {
+        src: ['benchmark/*.js', 'benchmark/fixtures/*.js'],
+      },
+      examples: {
+        src: ['examples/balls/**/*.js', 'examples/invaders/**/*.js'],
+      },
+      tests: {
+        src: ['test/**/*.js'],
+      },
     },
     concat: {
-      dist: {
+      makr: {
         src: files,
         dest: 'dist/makr.js',
+      },
+    },
+    uglify: {
+      makr: {
+        src: 'dist/makr.js',
+        dest: 'dist/makr.min.js',
       },
     },
     yuidoc: {
@@ -51,12 +64,13 @@ module.exports = function(grunt) {
         },
       },
     },
-    mochaTest: {
-      dist: {
-        options: {
-          reporter: 'spec',
-        },
-        src: 'test/**/*.js',
+    simplemocha: {
+      options: {
+        reporter: 'spec',
+        timeout: 5000,
+      },
+      all: {
+        src: 'test/*.js',
       },
     },
     benchmark: {
@@ -71,8 +85,9 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('default', ['jshint', 'concat', 'yuidoc']);
-  grunt.registerTask('test', ['concat', 'mochaTest']);
-  grunt.registerTask('perf', ['concat', 'benchmark']);
+  grunt.registerTask('default', ['jshint:makr', 'concat:makr', 'uglify:makr', 'jshint:examples']);
+  grunt.registerTask('docs', ['concat:makr', 'yuidoc']);
+  grunt.registerTask('test', ['concat:makr', 'jshint:examples', 'simplemocha:all']);
+  grunt.registerTask('perf', ['concat:makr', 'jshint:benchmark', 'benchmark']);
 
 };
