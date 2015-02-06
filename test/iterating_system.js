@@ -1,5 +1,5 @@
 var should = require('should');
-var makr = require('../dist/makr');
+var makr = require('..');
 
 function IterationTestSystem() {
   makr.IteratingSystem.call(this);
