@@ -1,6 +1,6 @@
 {
   "name": "makr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fast HTML5 Entity-System game engine",
   "author": "Florent Cailhol <florent.cailhol@gmail.com>",
   "license": "MIT",
