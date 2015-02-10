@@ -1,0 +1,22 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "__DEV__": false
+  },
+  "rules": {
+    "block-scoped-var": 2,
+    "curly": 0,
+    "dot-notation": [2, {"allowKeywords": true}],
+    "eqeqeq": [2, "allow-null"],
+    "key-spacing": 0,
+    "new-cap": 0,
+    "no-else-return": 2,
+    "no-underscore-dangle": 0,
+    "no-use-before-define": [2, "nofunc"],
+    "semi": [2, "never"],
+    "strict": 0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "makr",
+  "version": "2.0.0",
+  "description": "Fast HTML5 Entity-System game engine",
+  "author": "Florent Cailhol <florent.cailhol@gmail.com>",
+  "license": "MIT",
+  "repository": "makrjs/makr",
+  "keywords": [
+    "speedr",
+    "game",
+    "ecs",
+    "entity",
+    "component"
+  ],
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "eslint": "^0.14.1",
+    "matcha": "^0.6.0",
+    "mocha": "^2.1.0"
+  },
+  "scripts": {
+    "lint": "eslint lib",
+    "perf": "matcha",
+    "test": "mocha --check-leaks"
+  }
+}
