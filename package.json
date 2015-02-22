@@ -18,13 +18,16 @@
   ],
   "devDependencies": {
     "chai": "^1.10.0",
+    "coveralls": "^2.11.2",
     "eslint": "^0.14.1",
+    "istanbul": "^0.3.6",
     "matcha": "^0.6.0",
     "mocha": "^2.1.0"
   },
   "scripts": {
     "lint": "eslint lib",
     "perf": "matcha",
-    "test": "mocha --check-leaks"
+    "test": "mocha --check-leaks",
+    "coveralls": "istanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   }
 }
