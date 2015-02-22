@@ -33,4 +33,10 @@ describe("Components", function() {
       expect(components.mask(Cs[i])).to.equal(1 << i)
     }
   })
+
+  it("throws if the component's type is unknown", function() {
+    expect(function() {
+      components.index(function() {})
+    }).to.throw()
+  })
 })
