@@ -72,4 +72,45 @@ describe("EntityManager", function() {
 
     expect(em1.valid(e1)).to.be.false()
   })
+
+  it("should retrieve entities using there ID", function() {
+    var e1 = em.create()
+    var e2 = em.create()
+
+    expect(em.get(e1.id)).to.equal(e1)
+    expect(em.get(e2.id)).to.equal(e2)
+  })
+
+  it("should query entities", function() {
+    for (var i = 0; i < 10; i++) {
+      var e = em.create()
+      e.add(new Position(0, 0))
+      e.add(new Motion(0, 0))
+    }
+
+    for (var i = 0; i < 10; i++) {
+      var e = em.create()
+      e.add(new Position(0, 0))
+      e.add(new Tag('foo'))
+    }
+
+    for (var i = 0; i < 10; i++) {
+      var e = em.create()
+      e.add(new Tag('bar'))
+    }
+
+    expect(em.query(Position)).to.have.length(20)
+    expect(em.query(Motion)).to.have.length(10)
+    expect(em.query(Tag)).to.have.length(20)
+    expect(em.query()).to.have.length(0)
+
+    var tagged = em.query(Tag)
+    for (var i = 0; i < tagged.length; i++) {
+      if ((i & 1) === 0) {
+        tagged[i].destroy()
+      }
+    }
+
+    expect(em.query(Tag)).to.have.length(10)
+  })
 })
