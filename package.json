@@ -1,7 +1,7 @@
 {
   "name": "makr",
   "version": "2.0.0",
-  "description": "Fast HTML5 Entity-System game engine",
+  "description": "Fast HTML5 Entity-Component-System library",
   "author": "Florent Cailhol <florent.cailhol@gmail.com>",
   "license": "MIT",
   "repository": "makrjs/makr",
@@ -10,7 +10,8 @@
     "game",
     "ecs",
     "entity",
-    "component"
+    "component",
+    "system"
   ],
   "main": "lib/index.js",
   "files": [
