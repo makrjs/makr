@@ -1,6 +1,8 @@
-# makr.js
+# makr 1.x
 
-High performance JavaScript entity system engine
+> High performance JavaScript entity system engine
+
+**This branch is no longer maintained.**
 
 ## Installation
 
