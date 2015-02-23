@@ -1,3 +1,8 @@
+## 2.1.0
+
+* Add `em.capacity`
+* Hit 100% coverage
+
 ## 2.0.0
 
 This release is largely a refactoring release to remove the concept of `ComponentRegistry` from makr.
