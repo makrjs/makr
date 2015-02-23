@@ -113,4 +113,25 @@ describe("EntityManager", function() {
 
     expect(em.query(Tag)).to.have.length(10)
   })
+
+  it("should expand", function() {
+    var capacity = em.capacity
+
+    expect(em.capacity).to.be.above(0)
+
+    for (var i = 0; i < capacity; i++) {
+      em.create()
+    }
+
+    expect(em.capacity).to.equal(capacity)
+
+    // It should grow
+    em.create()
+    expect(em.capacity).to.be.above(capacity)
+    var c2 = em.capacity
+
+    // It should not grow
+    em.create()
+    expect(em.capacity).to.equal(c2)
+  })
 })
