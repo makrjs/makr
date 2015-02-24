@@ -33,15 +33,15 @@ suite('EntityManager', function() {
   })
 
   bench('query on 1000 entities with 1 component (500 matches)', function() {
-    keep = em.query(A)
+    em.query(A)
   })
 
   bench('query on 1000 entities with 3 components (84 matches)', function() {
-    keep = em.query(A, B, C)
+    em.query(A, B, C)
   })
 
   bench('query on 1000 entities with 10 components (1 match)', function() {
-    keep = em.query(A, B, C, D, E, F, G, H, I, J)
+    em.query(A, B, C, D, E, F, G, H, I, J)
   })
 })
 
