@@ -1,144 +1,68 @@
 var makr = require('../lib/index')
+var em
 
-var Component = function() {}
-var component = new Component()
+function A() {}
+function B() {}
+function C() {}
+function D() {}
+function E() {}
+function F() {}
+function G() {}
+function H() {}
+function I() {}
+function J() {}
 
-var em = makr(Component)
-var entity
-var id
+suite('EntityManager', function() {
+  before(function() {
+    em = makr(A, B, C, D, E, F, G, H, I, J)
 
-function createNumEntities(num) {
-  for(var i = 0; i < num; i++) {
-    em.create()
-  }
-}
+    for (var i = 0; i < 1000; i++) {
+      var e = em.create()
 
-function destroyAllEntities() {
-  for(var i = 0; i < em._entityInst.length; i++) {
-    var entity = em.get(i)
-    if(entity !== null) {
-      entity.destroy()
+      i % 2 === 0 && e.add(new A())
+      i % 3 === 0 && e.add(new B())
+      i % 4 === 0 && e.add(new C())
+      i % 5 === 0 && e.add(new D())
+      i % 6 === 0 && e.add(new E())
+      i % 7 === 0 && e.add(new F())
+      i % 8 === 0 && e.add(new G())
+      i % 9 === 0 && e.add(new H())
+      i % 2 === 0 && e.add(new I())
+      i % 3 === 0 && e.add(new J())
     }
-  }
-}
-
-suite('Entity Manager query 1x entities, 1x components', function() {
-  before(function() {
-    createNumEntities(1)
   })
 
-  bench('query 1 entity', function() {
-    em.query(Component)
+  bench('query on 1000 entities with 1 component (500 matches)', function() {
+    keep = em.query(A)
   })
 
-  after(function() {
-    destroyAllEntities()
+  bench('query on 1000 entities with 3 components (84 matches)', function() {
+    keep = em.query(A, B, C)
+  })
+
+  bench('query on 1000 entities with 10 components (1 match)', function() {
+    keep = em.query(A, B, C, D, E, F, G, H, I, J)
   })
 })
 
-suite('Entity Manager query 10x entities, 1x components', function() {
+suite('EntityManager', function() {
   before(function() {
-    createNumEntities(10)
+    em = makr(A, B, C, D, E, F, G, H, I, J)
   })
 
-  bench('query 10 entities', function() {
-    em.query(Component)
-  })
-
-  after(function() {
-    destroyAllEntities()
-  })
-})
-
-suite('Entity Manager query 100x entities, 1x components', function() {
-  before(function() {
-    createNumEntities(100)
-  })
-
-  bench('query 100 entities', function() {
-    em.query(Component)
-  })
-
-  after(function() {
-    destroyAllEntities()
-  })
-})
-
-suite('Entity Manager query 1000x entities, 1x components', function() {
-  before(function() {
-    createNumEntities(1000)
-  })
-
-  bench('query 1000 entities', function() {
-    em.query(Component)
-  })
-
-  after(function() {
-    destroyAllEntities()
-  })
-})
-
-suite('Entity Manager query 10000x entities, 1x components', function() {
-  before(function() {
-    createNumEntities(10000)
-  })
-
-  bench('query 10000 entities', function() {
-    em.query(Component)
-  })
-
-  after(function() {
-    destroyAllEntities()
-  })
-})
-
-suite('Entity Manager query 100000x entities, 1x components', function() {
-  before(function() {
-    createNumEntities(100000)
-  })
-
-  bench('query 100000 entities', function() {
-    em.query(Component)
-  })
-
-  after(function() {
-    destroyAllEntities()
-  })
-})
-
-suite('Entity Manager query 1000000x entities, 1x components', function() {
-  before(function() {
-    createNumEntities(1000000)
-  })
-
-  bench('query 1000000 entities', function() {
-    em.query(Component)
-  })
-
-  after(function() {
-    destroyAllEntities()
-  })
-})
-
-suite('Entity Manager', function() {
-  before(function() {
-    entity = em.create()
-    id = entity.id
-  })
-
-  bench('create', function() {
+  bench('#create', function() {
     em.create()
   })
 
-  bench('get', function() {
-    em.get(id)
+  bench('#get', function() {
+    em.get(randomID())
   })
 
-  bench('valid', function() {
-    em.valid(id)
-  })
-
-  after(function() {
-    entity.destroy()
+  bench('#valid', function() {
+    em.valid(randomID())
   })
 })
+
+function randomID() {
+  return (Math.random() * 1000) | 0
+}
