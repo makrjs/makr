@@ -145,6 +145,14 @@ describe("EntityManager", function() {
       }
     }
 
+    // It should not return duplicate entities
+    var queryEntities = em.query(Position, Motion)
+    for (var i = 0; i < queryEntities.length; i++) {
+      for (var j = i + 1; j < queryEntities.length; j++) {
+        expect(queryEntities[i]).not.to.equal(queryEntities[j])
+      }
+    }
+
     for (var i = 0; i < queryEntities.length; i++) {
       queryEntities[i].remove(Position)
     }
