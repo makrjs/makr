@@ -114,6 +114,64 @@ describe("EntityManager", function() {
     expect(em.query(Tag)).to.have.length(10)
   })
 
+  it("should return the correct entities when querying", function() {
+    var destroyedEntities = []
+    var aliveEntities = []
+
+    for (var i = 0; i < 10; i++) {
+      var e = em.create()
+      e.add(new Position(0, 0))
+      e.add(new Motion(0, 0))
+      aliveEntities.push(e)
+    }
+
+    // We destroy them in a separate loop to ensure entities aren't picked from the object pool
+    // as this would make the entities in the destroyEntities alive again
+    for (var i = 0; i < 10; i++) {
+      var e = aliveEntities[i]
+      if (i % 2 === 0) {
+        e.destroy()
+        destroyedEntities.push(e)
+      }
+    }
+
+    // It should not return destroyed entities
+    var queryEntities = em.query(Position, Motion)
+    for (var i = 0; i < queryEntities.length; i++) {
+      expect(queryEntities[i].get(Position)).not.to.be.null()
+      expect(queryEntities[i].has(Position)).not.to.be.false()
+      for (var j = 0; j < destroyedEntities.length; j++) {
+        expect(queryEntities[i]).not.to.equal(destroyedEntities[j])
+      }
+    }
+
+    for (var i = 0; i < queryEntities.length; i++) {
+      queryEntities[i].remove(Position)
+    }
+
+    queryEntities = em.query(Motion)
+
+    // It should return entities with the correct components after removing components
+    for (var i = 0; i < queryEntities.length; i++) {
+      expect(queryEntities[i].get(Position)).to.be.null()
+      expect(queryEntities[i].has(Position)).to.be.false()
+      expect(queryEntities[i].get(Motion)).not.to.be.null()
+      expect(queryEntities[i].has(Motion)).not.to.be.false()
+    }
+
+    for (var i = 0; i < queryEntities.length; i++) {
+      queryEntities[i].add(new Position(0, 0))
+    }
+
+    queryEntities = em.query(Position, Motion)
+
+    // It should return entities with the correct components after adding components
+    for (var i = 0; i < queryEntities.length; i++) {
+      expect(queryEntities[i].get(Position)).not.to.be.null()
+      expect(queryEntities[i].has(Position)).not.to.be.false()
+    }
+  })
+
   it("should expand", function() {
     var capacity = em.capacity
 
